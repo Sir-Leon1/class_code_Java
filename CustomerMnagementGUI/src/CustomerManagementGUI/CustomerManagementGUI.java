@@ -208,6 +208,34 @@ public class CustomerManagementGUI extends JFrame {
         }
     }
 
+
+/*
+private void generateReportFromDatabase() {
+    StringBuilder report = new StringBuilder("Customer Report:\n");
+
+    try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
+         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Customers");
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+
+        while (resultSet.next()) {
+            String id = resultSet.getString("id");
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            report.append("Customer [id=").append(id).append(", name=").append(name).append(", email=").append(email).append("]\n");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error generating report from database: " + e.getMessage());
+    }
+
+    JOptionPane.showMessageDialog(this, report.toString());
+}
+
+*/
+
+
+
     private void generateReportFromDatabase() {
         StringBuilder report = new StringBuilder("Customer Report:\n");
         for (Customer customer : customers) {
