@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CustomerManagementGUI extends JFrame {
     private ArrayList<Customer> customers = new ArrayList<>();
-    private JTextField phoneField, nameField, emailField;
+    private JTextField phoneField, nameField;
 
     private static final String JDBC_URL = "jdbc:ucanaccess://Contacts_App.accdb";
 
@@ -26,7 +26,6 @@ public class CustomerManagementGUI extends JFrame {
 
         phoneField = new JTextField(20);
         nameField = new JTextField(20);
-        emailField = new JTextField(20);
 
         JButton addButton = new JButton("Add Customer");
         JButton deleteButton = new JButton("Delete Customer");
@@ -39,14 +38,12 @@ public class CustomerManagementGUI extends JFrame {
 
                 String phone = phoneField.getText();
                 String name = nameField.getText();
-                String email = emailField.getText();
 
-                Customer newCustomer = new Customer(phone, name, email);
+                Customer newCustomer = new Customer(phone, name);
                 addCustomerToDatabase(newCustomer);
 
                 phoneField.setText("");
                 nameField.setText("");
-                emailField.setText("");
             }
         });
 
@@ -58,7 +55,6 @@ public class CustomerManagementGUI extends JFrame {
 
                 phoneField.setText("");
                 nameField.setText("");
-                emailField.setText("");
             }
         });
 
@@ -67,14 +63,12 @@ public class CustomerManagementGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String phone = phoneField.getText();
                 String name = nameField.getText();
-                String email = emailField.getText();
 
-                Customer updatedCustomer = new Customer(phone, name, email);
+                Customer updatedCustomer = new Customer(phone, name);
                 updateCustomerInDatabase(updatedCustomer);
 
                 phoneField.setText("");
                 nameField.setText("");
-                emailField.setText("");
             }
         });
 
@@ -85,7 +79,6 @@ public class CustomerManagementGUI extends JFrame {
 
                 phoneField.setText("");
                 nameField.setText("");
-                emailField.setText("");
             }
         });
 
@@ -93,8 +86,6 @@ public class CustomerManagementGUI extends JFrame {
         panel.add(phoneField);
         panel.add(new JLabel("Customer Name:"));
         panel.add(nameField);
-        panel.add(new JLabel("Customer Email:"));
-        panel.add(emailField);
         panel.add(addButton);
         panel.add(deleteButton);
         panel.add(updateButton);
@@ -107,7 +98,7 @@ public class CustomerManagementGUI extends JFrame {
         initializeDatabase();
     }
 
-    /*initializedatabase initializes the database */
+    /*initialize database initializes the database */
     private void initializeDatabase() {
         try {
             Connection connection = DriverManager.getConnection(JDBC_URL);
@@ -119,26 +110,6 @@ public class CustomerManagementGUI extends JFrame {
         }
     }
 
-/*
-    private static void createTableIfNotExists(Connection connection) {
-        String createTableSQL = "CREATE TABLE Customers (phone VARCHAR(255) PRIMARY KEY, name VARCHAR(255), email VARCHAR(255))";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
-            preparedStatement.executeUpdate();
-            System.out.println("Table 'Customers' created successfully (if it didn't exist already).");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-/*
-    private void createTableIfNotExists(Connection connection) throws SQLException {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS Customers (id VARCHAR(255) PRIMARY KEY, name VARCHAR(255), email VARCHAR(255))";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
-            preparedStatement.executeUpdate();
-        }
-    }
-*/
-
     private void loadCustomersFromDatabase(Connection connection) throws SQLException {
         String selectSQL = "SELECT * FROM Customers";
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
@@ -146,19 +117,17 @@ public class CustomerManagementGUI extends JFrame {
             while (resultSet.next()) {
                 String phone = resultSet.getString("phone");
                 String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                customers.add(new Customer(phone, name, email));
+                customers.add(new Customer(phone, name));
             }
         }
     }
 
     private void addCustomerToDatabase(Customer newCustomer) {
-        String insertSQL = "INSERT INTO Customers (phone, name, email) VALUES (?, ?, ?)";
+        String insertSQL = "INSERT INTO Customers (phone, name) VALUES (?, ?)";
         try (Connection connection = DriverManager.getConnection(JDBC_URL);
         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
             preparedStatement.setString(1, newCustomer.getPhone());
             preparedStatement.setString(2, newCustomer.getName());
-            preparedStatement.setString(3, newCustomer.getEmail());
             int rowsAffected = preparedStatement.executeUpdate();
             
             if (rowsAffected > 0) {
@@ -189,11 +158,10 @@ public class CustomerManagementGUI extends JFrame {
     }
 
     private void updateCustomerInDatabase(Customer updateCustomer) {
-        String updateSQL = "UPDATE Customers SET name = ?, email = ? WHERE phone = ?";
+        String updateSQL = "UPDATE Customers SET name = ? WHERE phone = ?";
         try (Connection connection =  DriverManager.getConnection(JDBC_URL);
         PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
             preparedStatement.setString(1, updateCustomer.getName());
-            preparedStatement.setString(2, updateCustomer.getEmail());
             preparedStatement.setString(3, updateCustomer.getPhone());
             int rowsAffected = preparedStatement.executeUpdate();
 
@@ -220,8 +188,7 @@ public class CustomerManagementGUI extends JFrame {
 	        while (resultSet.next()) {
 	            String phone = resultSet.getString("phone");
 	            String name = resultSet.getString("name");
-	            String email = resultSet.getString("email");
-	            report.append("Customer [phone=").append(phone).append(", name=").append(name).append(", email=").append(email).append("]\n");
+	            report.append(" Name:: ").append(name).append(",   Phone::").append(phone).append("\n");
 	        }
 	
 	    } catch (SQLException e) {
@@ -234,36 +201,21 @@ public class CustomerManagementGUI extends JFrame {
 
 
 
-
-/*
-    private void generateReportFromDatabase() {
-        StringBuilder report = new StringBuilder("Customer Report:\n");
-        for (Customer customer : customers) {
-            report.append(customer).append("\n");
-        }
-        JOptionPane.showMessageDialog(this, report.toString());
-    }
-
-*/
-
     public static void main(String[] args) {
         new CustomerManagementGUI();
     }
 }
 
 /*
- * class customer implements the array for the applications first
- * primitive version.
+ * class customer implements the array for the application
  */
 class Customer {
     private String phone;
     private String name;
-    private String email;
 
-    public Customer(String phone, String name, String email) {
+    public Customer(String phone, String name) {
         this.phone = phone;
         this.name = name;
-        this.email = email;
     }
 
     public String getPhone() {
@@ -274,10 +226,6 @@ class Customer {
         return name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setId(String phone) {
         this.phone = phone;
     }
@@ -286,13 +234,9 @@ class Customer {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public String toString() {
-        return ":   " + name + "    " + phone + "    " + email + "";
+        return ":   " + name + "    " + phone + "";
     }
 }
 
