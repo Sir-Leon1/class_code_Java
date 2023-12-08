@@ -111,14 +111,15 @@ public class CustomerManagementGUI extends JFrame {
     private void initializeDatabase() {
         try {
             Connection connection = DriverManager.getConnection(JDBC_URL);
-            createTableIfNotExists(connection);
+            //createTableIfNotExists(connection);
             loadCustomersFromDatabase(connection);
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error initialising database: " + e.getMessage());
         }
     }
-    
+
+/*
     private static void createTableIfNotExists(Connection connection) {
         String createTableSQL = "CREATE TABLE Customers (phone VARCHAR(255) PRIMARY KEY, name VARCHAR(255), email VARCHAR(255))";
         try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
