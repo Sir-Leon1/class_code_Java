@@ -32,5 +32,10 @@ public class NameGame {
         fullName = firstName;
         fullName = fullName.concat(" ").concat(lastName);
         System.out.println("Your full name is " + fullName + ".");
+        initials = firstName.charAt[0] + "." + lastName.charAt[0] + ".";
+        System.out.println("Your initials are " + initials);
+        numLetters = firstName.length() + lastName.length();
+        System.out.println(" Did you know you have " + numLetters + "letters in your name");
+        System.out.println("Bye");
     }
 }
