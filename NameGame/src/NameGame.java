@@ -32,5 +32,6 @@ public class NameGame {
         fullName = firstName;
         fullName = fullName.concat(" ").concat(lastName);
         System.out.println("Your full name is " + fullName + ".");
+        System.out.println
     }
 }
