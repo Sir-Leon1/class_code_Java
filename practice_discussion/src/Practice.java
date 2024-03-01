@@ -1,5 +1,3 @@
-
-package practice;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -9,25 +7,25 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.*;
 
-public class practice extends Application{
-    @override
-    public void(stage primarystage){
+public class Practice extends Application{
+    @Override
+    public void start(Stage primarystage){
         Button btn = new Button();
-        btn.setText(Say hello world);
+        btn.setText("Say hello world");
 
-        btn.setOnAction(New EventHandler<ActionEvent>() {
+        btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Hello world");
             }
         });
 
-        StackPane root = new stackPane();
+        StackPane root = new StackPane();
         root.getChildren().add(btn);
         Scene scene = new Scene(root, 300, 250);
-        primaryStage.setTitle("Hello world");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        primarystage.setTitle("Hello world");
+        primarystage.setScene(scene);
+        primarystage.show();
     }
 
     public static void main(String[] args) {
