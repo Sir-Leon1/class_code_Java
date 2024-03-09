@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    
+        {
+            "type": "java",
+            "name": "App_Flowpane",
+            "request": "launch",
+            "mainClass": "App_Flowpane",
+            "projectName": "Craeting_A_Pane_c194d363",
+            "vmArgs": "--module-path \"C:/Users/Administrator/Desktop/CoDe/Java/libraries/javafx-sdk-21.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "App_H_Box",
+            "request": "launch",
+            "mainClass": "App_H_Box",
+            "projectName": "Craeting_A_Pane_c194d363",
+            "vmArgs": "--module-path \"C:/Users/Administrator/Desktop/CoDe/Java/libraries/javafx-sdk-21.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "Craeting_A_Pane_c194d363",
+            "vmArgs": "--module-path \"C:/Users/Administrator/Desktop/CoDe/Java/libraries/javafx-sdk-21.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}
