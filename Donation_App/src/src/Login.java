@@ -1,7 +1,12 @@
+package src;
+//import src.*;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel; 
 import javax.swing.*;
+import java.awt.FlowLayout;
 import java.awt.event.*;
+import javax.swing.event.*;
 
 public class Login implements ActionListener {
 
@@ -12,10 +17,12 @@ public class Login implements ActionListener {
     private static JButton button;
     private static JLabel success;
     private static JButton registerBtn;
+    public static JPanel loginPanel = new JPanel();
+    private static JFrame frame;
 
     public static void main(String[] args){
-        JFrame frame = new JFrame();
-        JPanel panel = new JPanel();
+        frame = new JFrame();
+        
         
         /**
          * Create the frame of the 
@@ -23,26 +30,28 @@ public class Login implements ActionListener {
          */
         frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
-        panel.setLayout(null);
+        frame.add(loginPanel);
+        //sets the GUI at the center of the screen
+        frame.setLocationRelativeTo(null);
+        loginPanel.setLayout(null);
 
         //label for the Username
         label = new JLabel("User");
         label.setBounds(10, 20, 80, 25);
-        panel.add(label);
+        loginPanel.add(label);
         //Text area for the username text
         usertext = new JTextField();
         usertext.setBounds(100, 20, 165, 25);
-        panel.add(usertext);
+        loginPanel.add(usertext);
 
         //A label for the password
         password = new JLabel("Password");
         password.setBounds(10, 50, 80, 25);;
-        panel.add(password);
+        loginPanel.add(password);
         //text area for the password
         passwordText = new JPasswordField();
         passwordText.setBounds(100, 50, 165, 25);
-        panel.add(passwordText);
+        loginPanel.add(passwordText);
 
         //Add login button to the panel
         button = new JButton("Login");
@@ -54,29 +63,41 @@ public class Login implements ActionListener {
         //Add an action listener to the buttons
         button.addActionListener(new Login());
         registerBtn.addActionListener(new Login());
-        panel.add(button);
-        panel.add(registerBtn);
+        loginPanel.add(button);
+        loginPanel.add(registerBtn);
 
         success = new JLabel("");
         success.setBounds(10, 110, 300, 25);
-        panel.add(success);
+        loginPanel.add(success);
 
         frame.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String user, password;
 
-        /**
-         * Get and save the user name and
-         * password
-         */
-        String user = usertext.getText();
-        String password = passwordText.getText();
+        if(e.getSource() == button){
+            user = usertext.getText();
+            password = passwordText.getText();
 
-        //Check if the password and username are same as the registered ones
-        if(user.equals("Leon") & password.equals("12345")){
-            success.setText("Login successful");
+            if(user.equals("Leon") & password.equals("1234")){
+                success.setText("Login Successful");
+            }
         }
+
+        else if (e.getSource() == registerBtn){
+            user = usertext.getText();
+            password = passwordText.getText();
+            
+            frame.dispose();
+            SwingUtilities.invokeLater(() -> {
+                UserRegForm registration = new UserRegForm();
+                registration.setVisible(true);
+            });
+
+        }
+
     }
+
 }
