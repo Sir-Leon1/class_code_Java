@@ -18,7 +18,7 @@ public class Login implements ActionListener {
     private static JLabel success;
     private static JButton registerBtn;
     public static JPanel loginPanel = new JPanel();
-    private static JFrame frame;
+    public static JFrame frame;
 
     public static void main(String[] args){
         frame = new JFrame();
@@ -71,6 +71,8 @@ public class Login implements ActionListener {
         loginPanel.add(success);
 
         frame.setVisible(true);
+        //Initialises the database connection
+        //initializeDatabase();
     }
 
     @Override
@@ -93,7 +95,7 @@ public class Login implements ActionListener {
             frame.dispose();
             SwingUtilities.invokeLater(() -> {
                 UserRegForm registration = new UserRegForm();
-                registration.setVisible(true);
+                registration.regFrame.setVisible(true);
             });
 
         }

@@ -1,60 +1,110 @@
 package src;
 
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-//import java.awt.event.ActionListener;
 
 
-public class UserRegForm extends JFrame /*implements ActionListener*/ {
+public class UserRegForm implements ActionListener {
     
-    private static JLabel label;
-    private static JTextField txtArea;
-    public static JButton button;
+    private static JLabel locationLbl, usrTypeLbl, passwordLbl, userNameLbl, phoneLbl, emailLbl;
+    private static JTextField userNameField, phoneField, emailField;
+    private static JPasswordField passwordField;
+    public static JButton button, loginButton;
+    private static JComboBox<String> usrTypeComboBox, locationComboBox;
+    private static JButton registerButton;
     private JPanel regPanel = new JPanel();
+    public static JFrame regFrame;
 
     public UserRegForm() {
-        setTitle("New User Registration");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
-        setLocationRelativeTo(null);
+        regFrame = new JFrame();
+        regFrame.setTitle("New User Registration");
+        regFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        regFrame.setSize(400, 300);
+        regFrame.setLocationRelativeTo(null);
 
         regPanel.setLayout(new GridLayout(7, 2, 10, 10));
-        //regPanel.setBorder(BorderFactory)
+        regPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        labelAndCombobox("User Type", new String[]{"Admin", "Donor", "Recipient"});
-        labelAndCombobox("Location", new String[]{"Location A", "Location B", "Locatin c"});
-        labelAndTextfield("Username");
-        labelAndTextfield("password");
-        labelAndTextfield("Phone number");
-        labelAndTextfield("Email:");
+        usrTypeLbl = new JLabel("User Type");
+        usrTypeComboBox = new JComboBox<>(new String[]{"Select here", "Admin", "Donor", "Recipient"});
+        regPanel.add(usrTypeLbl);
+        regPanel.add(usrTypeComboBox);
 
-        add(regPanel);
+        locationLbl = new JLabel("Location");
+        locationComboBox = new JComboBox<>(new String[]{"Select here", "Location A", "Location B", "Locatin C"});
+        regPanel.add(locationLbl);
+        regPanel.add(locationComboBox);
+        
+        //creates a label and 
+        userNameLbl = new JLabel("Username");
+        userNameField = new JTextField();
+        regPanel.add(userNameLbl);
+        regPanel.add(userNameField);
+
+        passwordLbl = new JLabel("Set a passowrd");
+        passwordField = new JPasswordField();
+        regPanel.add(passwordLbl);
+        regPanel.add(passwordField);
+
+        phoneLbl = new JLabel("Phone number");
+        phoneField = new JTextField();
+        regPanel.add(phoneLbl);
+        regPanel.add(phoneField);
+
+        emailLbl = new JLabel("Email:");
+        emailField = new JTextField();
+        regPanel.add(emailLbl);
+        regPanel.add(emailField);
+
+        registerButton = new JButton("Register");
+        registerButton.addActionListener(this);
+        regPanel.add(registerButton);
+
+        loginButton = new JButton("Back to Login");
+        loginButton.addActionListener(this);
+        regPanel.add(loginButton);
+        //implement back to login button
+
+        regFrame.add(regPanel);
 
 
 
     }
 
     @Override
-    public void actionPerformed(ActonEvent e) {
-        if (e.getSource() == register){
-            String userType = (String) 
-        }
+    public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == registerButton){
+                String userType = (String)  usrTypeComboBox.getSelectedItem();
+                String location = (String) locationComboBox.getSelectedItem();
+                String username = userNameField.getText();
+                String password = new String(passwordField.getPassword());
+                String phoneNumber = phoneField.getText();
+                String email = emailField.getText();
+/**
+                //Implement A database to store the information
+                //Shows the selected information on a dialog box
+                JOptionPane.showMessageDialog(this,
+                "User Type: " + userType + "\n" +
+                "Location: " + location + "\n" +
+                "Password: " + password + "\n" +
+                "Phone Number:" + phoneNumber + "\n" +
+                "Email: " + email,
+                "Registration Details",
+                JOptionPane.INFORMATION_MESSAGE);
+*/
+            }
+
+            else if (e.getSource() == loginButton){
+                regFrame.dispose();
+                Login login = new Login();
+                login.frame.setVisible(true);
+            }
     }
 
-    private void labelAndCombobox(String labelTxt, String[] items) {
-        label = new JLabel(labelTxt);
-        JComboBox<String> comboBox = new JComboBox<>(items);
-        regPanel.add(label);
-        regPanel.add(comboBox);
-    }
     
-    private void labelAndTextfield(String labelTxt){
-        label = new JLabel(labelTxt);
-        txtArea = new JTextField();
-        regPanel.add(label);
-        regPanel.add(txtArea);
-    }
+
 
 }
