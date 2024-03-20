@@ -8,7 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.event.*;
 
-public class Login implements ActionListener {
+public class Login implements ActionListener{
 
     private static JLabel label;
     private static JTextField usertext;
@@ -20,7 +20,8 @@ public class Login implements ActionListener {
     public static JPanel loginPanel = new JPanel();
     public static JFrame frame;
 
-    public static void main(String[] args){
+    public Login() {
+
         frame = new JFrame();
         
         
@@ -61,8 +62,8 @@ public class Login implements ActionListener {
         
 
         //Add an action listener to the buttons
-        button.addActionListener(new Login());
-        registerBtn.addActionListener(new Login());
+        button.addActionListener(this);
+        registerBtn.addActionListener(this);
         loginPanel.add(button);
         loginPanel.add(registerBtn);
 
@@ -70,10 +71,18 @@ public class Login implements ActionListener {
         success.setBounds(10, 110, 300, 25);
         loginPanel.add(success);
 
-        frame.setVisible(true);
+        frame.add(loginPanel);
         //Initialises the database connection
         //initializeDatabase();
     }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Login login = new Login();
+            login.frame.setVisible(true);
+        });
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
