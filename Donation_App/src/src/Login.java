@@ -8,7 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.event.*;
 
-public class Login implements ActionListener{
+public class Login {
 
     private static JLabel label;
     private static JTextField usertext;
@@ -20,7 +20,7 @@ public class Login implements ActionListener{
     public static JPanel loginPanel = new JPanel();
     public static JFrame frame;
 
-    public Login() {
+    public static void login_GUI() {
 
         frame = new JFrame();
         
@@ -62,8 +62,35 @@ public class Login implements ActionListener{
         
 
         //Add an action listener to the buttons
-        button.addActionListener(this);
-        registerBtn.addActionListener(this);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String user, password;
+
+                if (e.getSource() == button){
+                    user = usertext.getText();
+                    password = passwordText.getText();
+
+                    if(user.equals("Leon") & password.equals("1234")){
+                        success.setText("Login Successful");
+                    }
+                }
+            }
+        });
+        registerBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String user, password;
+                user = usertext.getText();
+                password = passwordText.getText();
+
+                frame.dispose();
+                SwingUtilities.invokeLater(() -> {
+                    UserRegForm userRegForm = new UserRegForm();
+                    UserRegForm.regFrame.setVisible(true);
+                });
+            }
+        });
         loginPanel.add(button);
         loginPanel.add(registerBtn);
 
@@ -72,43 +99,12 @@ public class Login implements ActionListener{
         loginPanel.add(success);
 
         frame.add(loginPanel);
+        frame.setVisible(true);
         //Initialises the database connection
-        //initializeDatabase();
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Login login = new Login();
-            login.frame.setVisible(true);
-        });
-    }
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String user, password;
-
-        if(e.getSource() == button){
-            user = usertext.getText();
-            password = passwordText.getText();
-
-            if(user.equals("Leon") & password.equals("1234")){
-                success.setText("Login Successful");
-            }
-        }
-
-        else if (e.getSource() == registerBtn){
-            user = usertext.getText();
-            password = passwordText.getText();
-            
-            frame.dispose();
-            SwingUtilities.invokeLater(() -> {
-                UserRegForm registration = new UserRegForm();
-                registration.regFrame.setVisible(true);
-            });
-
-        }
-
+        login_GUI();
     }
 
 }

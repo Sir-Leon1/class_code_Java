@@ -44,7 +44,7 @@ public class UserRegForm implements ActionListener {
         regPanel.add(userNameLbl);
         regPanel.add(userNameField);
 
-        passwordLbl = new JLabel("Set a passowrd");
+        passwordLbl = new JLabel("Set a password");
         passwordField = new JPasswordField();
         regPanel.add(passwordLbl);
         regPanel.add(passwordField);
@@ -77,12 +77,16 @@ public class UserRegForm implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
             if (e.getSource() == registerButton){
+                DBFunctionality.initializeDB();
                 String userType = (String)  usrTypeComboBox.getSelectedItem();
                 String location = (String) locationComboBox.getSelectedItem();
                 String username = userNameField.getText();
                 String password = new String(passwordField.getPassword());
                 String phoneNumber = phoneField.getText();
                 String email = emailField.getText();
+
+                Users newUsers = new Users(email, username, password, location, userType, phoneNumber);
+                DBFunctionality.addUserToDB(newUsers);
 /**
                 //Implement A database to store the information
                 //Shows the selected information on a dialog box
@@ -99,8 +103,8 @@ public class UserRegForm implements ActionListener {
 
             else if (e.getSource() == loginButton){
                 regFrame.dispose();
-                Login login = new Login();
-                login.frame.setVisible(true);
+                Login.login_GUI();
+
             }
     }
 
