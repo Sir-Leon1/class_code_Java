@@ -3,9 +3,9 @@ package src;
 import java.sql.*;
 
 public class DBFunctionality {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/userdetails";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/donationapp_user_details";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "12511435Leance.";
+    private static final String PASSWORD = "";
     //TODO Change the password in MYSQL
 
     public static void initializeDB(){
@@ -23,10 +23,10 @@ public class DBFunctionality {
     }
 
     public static void addUserToDB(Users newUsers){
-        String insertSQL = "INSERT INTO userdetails(email, username, password, location, userType, phoneNo) VALUES (?,?,?,?,?,?)";
+        String insertSQL = "INSERT INTO user_details(email, username, password, location, userType, phoneNo) VALUES (?,?,?,?,?,?)";
 
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-        PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)){
+        PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
             preparedStatement.setString(1, newUsers.getEmail());
             preparedStatement.setString(2, newUsers.getUsername());
             preparedStatement.setString(3, newUsers.getPassword());
@@ -34,12 +34,13 @@ public class DBFunctionality {
             preparedStatement.setString(5, newUsers.getUserType());
             preparedStatement.setString(6, newUsers.getPhoneNO());
 
-            /**int rowsAffected = preparedStatement.executeUpdate();
+            int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Success");
-            }*/
+            }
             //TODO : implement an if statement to check if the user was added.
             } catch (SQLException e){
+            System.out.println("Exception caught");
             e.printStackTrace();
         }
     }
