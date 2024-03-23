@@ -85,20 +85,9 @@ public class UserRegForm implements ActionListener {
                 String phoneNumber = phoneField.getText();
                 String email = emailField.getText();
 
-                Users newUsers = new Users(email, username, password, location, userType, phoneNumber);
-                DBFunctionality.addUserToDB(newUsers);
-/**
-                //Implement A database to store the information
-                //Shows the selected information on a dialog box
-                JOptionPane.showMessageDialog(this,
-                "User Type: " + userType + "\n" +
-                "Location: " + location + "\n" +
-                "Password: " + password + "\n" +
-                "Phone Number:" + phoneNumber + "\n" +
-                "Email: " + email,
-                "Registration Details",
-                JOptionPane.INFORMATION_MESSAGE);
-*/
+                //Users newUsers = new Users(email, username, password, location, userType, phoneNumber);
+                DBFunctionality.addUserToDB(email, username, password, location, userType, phoneNumber);
+
             }
 
             else if (e.getSource() == loginButton){

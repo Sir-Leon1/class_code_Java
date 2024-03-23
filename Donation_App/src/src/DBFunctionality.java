@@ -6,7 +6,6 @@ public class DBFunctionality {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/donationapp_user_details";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
-    //TODO Change the password in MYSQL
 
     public static void initializeDB(){
         try{
@@ -22,17 +21,20 @@ public class DBFunctionality {
         }
     }
 
-    public static void addUserToDB(Users newUsers){
+
+
+    public static void addUserToDB(String email, String username, String password, String location, String usertype, String phoneno){
+
         String insertSQL = "INSERT INTO user_details(email, username, password, location, userType, phoneNo) VALUES (?,?,?,?,?,?)";
 
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-            preparedStatement.setString(1, newUsers.getEmail());
-            preparedStatement.setString(2, newUsers.getUsername());
-            preparedStatement.setString(3, newUsers.getPassword());
-            preparedStatement.setString(4, newUsers.getLocation());
-            preparedStatement.setString(5, newUsers.getUserType());
-            preparedStatement.setString(6, newUsers.getPhoneNO());
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, password);
+            preparedStatement.setString(4, location);
+            preparedStatement.setString(5, usertype);
+            preparedStatement.setString(6, phoneno);
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
@@ -46,68 +48,3 @@ public class DBFunctionality {
     }
 }
 
-class Users {
-    private String email;
-    private String username;
-    private String password;
-    private String location;
-    private String userType;
-    private String phoneNO;
-
-    public Users(String email, String username, String password, String location, String userType, String phoneNo){
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.location = location;
-        this.userType = userType;
-        this.phoneNO = phoneNo;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public String getPhoneNO() {
-        return phoneNO;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public void setPhoneNO(String phoneNO) {
-        this.phoneNO = phoneNO;
-    }
-}
